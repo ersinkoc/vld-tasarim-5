@@ -1,0 +1,118 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+:root {
+  --paper: #eef0f7;
+  --surface: #ffffff;
+  --sunken: #e3e6f2;
+  --ink: #0e1233;
+  --muted: #555b82;
+  --line: #d3d8ea;
+  --accent: #2633e8;
+  --accent-soft: #dfe2ff;
+  --on-accent: #ffffff;
+  --pass: #0c8f71;
+  --fail: #d93d33;
+  --dot: #b9bfdc;
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --paper: #080b24;
+  --surface: #0f1438;
+  --sunken: #060820;
+  --ink: #e8eaff;
+  --muted: #959bcb;
+  --line: #222a5e;
+  --accent: #8c95ff;
+  --accent-soft: #1b2263;
+  --on-accent: #080b24;
+  --pass: #34dbb0;
+  --fail: #ff6d61;
+  --dot: #2a3270;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-sunken: var(--sunken);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-on-accent: var(--on-accent);
+  --color-pass: var(--pass);
+  --color-fail: var(--fail);
+  --font-sans: var(--font-anybody), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-martian), ui-monospace, monospace;
+}
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-stretch: 92%;
+  line-height: 1.55;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+code,
+pre,
+.mono {
+  font-family: var(--font-mono);
+  font-stretch: 88%;
+}
+
+/* Syntax colors for the tiny highlighter in lib/highlight.ts */
+.tok-k { color: var(--accent); }
+.tok-s { color: var(--pass); }
+.tok-n { color: #c2410c; }
+.tok-c { color: var(--muted); font-style: italic; }
+.tok-f { color: var(--ink); font-weight: 600; }
+[data-theme='dark'] .tok-n { color: #ffb26b; }
+
+/* Theme switch uses a view transition when the browser supports it */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+.marquee {
+  animation: marquee var(--marquee-duration, 60s) linear infinite;
+}
+
+.marquee-reverse {
+  animation-direction: reverse;
+}
+
+.mask-x {
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .marquee { animation: none; }
+}
